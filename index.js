@@ -24,14 +24,20 @@ db.connect(err => {
   console.log('Connected to MySQL!');
 });
 
-/*Endpoint to get users
-app.get('/users', (req, res) => {
-  db.query('SELECT * FROM users', (err, results) => {
-    if (err) throw err;
+
+// Route to get players
+app.get('/players', (req, res) => {
+  db.query('SELECT player_id, name FROM players', (err, results) => {
+    if (err) {
+      console.error('Error fetching players:', err);
+      res.status(500).json({ error: 'Database query error' });
+      return;
+    }
     res.json(results);
   });
 });
-*/
+
+
 app.listen(port, () => {
   console.log(`Server running on http://localhost:${port}`);
 });
