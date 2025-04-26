@@ -13,9 +13,10 @@
   
   <table class="sortable" id="my-table">
     <thead>
-      <tr data-sort-method="none">
-        <th data-sort-method="number">ID</th>
+      <tr>
+        <th>ID</th>
         <th>Name</th>
+        <th>Drafted</th>
       </tr>
     </thead>
     <tbody>
@@ -33,7 +34,15 @@
           row.innerHTML = `
             <td>${player.player_id}</td>
             <td>${player.name}</td>
+            <td><input type="checkbox" class="draftCheckbox"></td>
           `;
+            // Add event listener to the checkbox
+            row.querySelector('.draftCheckbox').addEventListener('change', (e) => {
+              if (e.target.checked) {
+                row.style.display = 'none'; // Hides the row
+              }
+            });
+
           tableBody.appendChild(row);
         });
       })
