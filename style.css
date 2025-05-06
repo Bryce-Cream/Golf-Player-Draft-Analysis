@@ -81,3 +81,26 @@ tr.drafted-visible td::before
   border-bottom: 1px solid #111;
   width: 100%;
 }
+
+@media print {
+  body {
+    margin: 0;
+    padding: 0;
+  }
+  @page {
+    margin: 10mm; /* default is ~19mm, so this tightens it */
+  }
+  .new-player {
+    background-color: #fff3cd !important; /* Light yellow */
+    -webkit-print-color-adjust: exact; /* Ensures printing of colors in Chrome */
+    print-color-adjust: exact;
+  }
+
+  .captain-player {
+    background-color: #d0e6ff !important; /* Light blue */
+    font-style: italic;
+    font-weight: bold;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+}
