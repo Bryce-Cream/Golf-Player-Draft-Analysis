@@ -10,12 +10,20 @@
 </head>
 <body>
   <h1>Player List</h1>
-  
+  <div class="menu-bar">
+    <input type="text" id="searchInput" placeholder="Search for names...">  
+    <input type="checkbox" id="toggleDrafted">Hide Drafted Players
+  </div>
   <table class="sortable" id="my-table">
     <thead>
       <tr>
-        <th>ID</th>
+        <th>Rank</th>
         <th>Name</th>
+        <th>HCP</th>
+        <th>AVG Participation</th>
+        <th>Past Gross Con (%)</th>
+        <th>Proj Net Con (%)</th>
+        <th>Draft Score</th>
         <th>Drafted</th>
       </tr>
     </thead>
@@ -23,25 +31,61 @@
       <!-- Player rows will be added here -->
     </tbody>
   </table>
-
+  <script src="searchbar.js"></script>
+  <script src="toggle-drafted.js"></script>
   <script>
     fetch('http://localhost:3000/players')
       .then(response => response.json())
       .then(data => {
         const tableBody = document.querySelector('#my-table tbody');
-        data.forEach(player => {
+
+        data.forEach(player => 
+        {
           const row = document.createElement('tr');
+            
           row.innerHTML = `
-            <td>${player.player_id}</td>
+            <td>${player.draft_rank}</td>
             <td>${player.name}</td>
+            <td>${player.hcp}</td>
+            <td>${player.avg_participation}</td>
+            <td>${player.past_gross_contribution}</td>
+            <td>${player.projected_net_contribution}</td>
+            <td>${player.draft_score}</td>
             <td><input type="checkbox" class="draftCheckbox"></td>
           `;
             // Add event listener to the checkbox
             row.querySelector('.draftCheckbox').addEventListener('change', (e) => {
-              if (e.target.checked) {
-                row.style.display = 'none'; // Hides the row
+              const isToggleChecked = document.getElementById('toggleDrafted').checked;
+
+              if (e.target.checked) 
+              {
+                if(isToggleChecked)
+                {
+                  row.classList.add('drafted-hidden');
+                }
+                else
+                {
+                  row.classList.add('drafted-visible');
+                }
+              }
+              else
+              {
+                row.classList.remove('drafted-visible', 'drafted-hidden');
               }
             });
+          if(player.new_player_check === 1)
+            row.classList.add('new-player');
+            
+          if(player.captain_check === 1)
+          {
+              row.classList.add('captain-player');
+              const checkbox = row.querySelector(".draftCheckbox");
+              if(checkbox)
+              {
+                checkbox.checked = true;
+              }
+              row.classList.add('drafted-visible');
+          }
 
           tableBody.appendChild(row);
         });

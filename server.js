@@ -27,7 +27,7 @@ db.connect(err => {
 
 // Route to get players
 app.get('/players', (req, res) => {
-  db.query('SELECT player_id, name FROM players', (err, results) => {
+  db.query('SELECT *, RANK() OVER (ORDER BY draft_score DESC) AS draft_rank FROM players_for_2025', (err, results) => {
     if (err) {
       console.error('Error fetching players:', err);
       res.status(500).json({ error: 'Database query error' });

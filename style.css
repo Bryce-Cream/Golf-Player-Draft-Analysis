@@ -38,3 +38,46 @@ input[type="checkbox"]
 {
   transform: scale(1.2);
 }
+
+#searchInput {
+  margin-bottom: 16px;
+  padding: 10px;
+  width: 250px;
+}
+
+tr.hidden {
+  display: none;
+}
+
+.menu-bar
+{
+  text-align: center;
+}
+
+.new-player
+{
+  background-color: #fff3cd !important;
+  font-style:italic;
+}
+.captain-player
+{
+  background-color: #e8f5e9 !important;
+}
+td
+{
+  position: relative;
+  padding: 5px 10px;
+}
+.drafted-hidden{
+  display: none;
+}
+
+tr.drafted-visible td::before
+{
+  content: " ";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  border-bottom: 1px solid #111;
+  width: 100%;
+}
